@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sjw90vqgz%t@-vj$#a@=dwogd)w#73gha7zbibjk(!&f25_mds'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-sjw90vqgz%t@-vj$#a@=dwogd)w#73gha7zbibjk(!&f25_mds')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['testserver', '127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
 
 
 # Application definition
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,19 +81,26 @@ WSGI_APPLICATION = 'mess_system.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': config(
+        'DATABASE_URL',
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        cast=dj_database_url.parse
+    )
+}
+
+# Add MySQL fallback if specifically wanted locally without DATABASE_URL
+if 'DATABASE_URL' not in os.environ and config('USE_MYSQL', default=False, cast=bool):
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mess_system_db',  # Ensure this DB exists in your MySQL
-        'USER': 'root',            # Update with your MySQL username
-        'PASSWORD': 'Anki2244@',    # Update with your MySQL password
+        'NAME': 'mess_system_db',
+        'USER': 'root',
+        'PASSWORD': 'Anki2244@',
         'HOST': 'localhost',
         'PORT': '3306',
     }
-}
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
+
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173').split(',')
 
 
 # Password validation
@@ -127,6 +138,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'mess_api.User'
 
