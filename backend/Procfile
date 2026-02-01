@@ -1,1 +1,1 @@
-web: gunicorn mess_system.wsgi
+web: python manage.py migrate && python create_superuser_prod.py && gunicorn mess_system.wsgi
