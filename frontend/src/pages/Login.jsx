@@ -52,7 +52,7 @@ export default function Login() {
 
             {/* Right Side - Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-                <div className="w-full max-w-md space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-200">
+                <div className="w-full max-w-md space-y-8 bg-white p-6 sm:p-10 rounded-2xl shadow-xl border border-gray-200">
                     <div className="text-center">
                         <h2 className="text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
                         <p className="mt-2 text-sm text-gray-600">

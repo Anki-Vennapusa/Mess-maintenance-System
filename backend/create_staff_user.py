@@ -8,7 +8,7 @@ from mess_api.models import User
 
 def create_staff_user():
     username = "staff"
-    password = "staffpassword123"
+    password = "staff123"
     email = "staff@example.com"
 
     if not User.objects.filter(username=username).exists():

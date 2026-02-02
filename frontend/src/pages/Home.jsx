@@ -65,7 +65,7 @@ const Home = () => {
                             alt="SVU Logo"
                             className="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-white/20 hover:border-green-400 transition-all duration-500 shadow-2xl hover:shadow-green-500/50 hover:scale-110 object-cover bg-white"
                         />
-                        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-2xl leading-tight text-yellow-400">
+                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-tight drop-shadow-2xl leading-tight text-yellow-400">
                             Sri Venkateswara University Hostel Mess Bill Maintenance System
                         </h1>
                     </div>
