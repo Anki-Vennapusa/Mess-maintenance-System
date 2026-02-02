@@ -2,7 +2,7 @@
 
 A comprehensive web-based application designed to streamline the management of hostel mess operations. This system facilitates efficient handling of student attendance, mess billing, menu management, and provides role-based access for students and staff.
 
-## 🚀 Key Features
+## 🚀 Key Features of this project
 
 ### 👤 User Roles
 *   **Student**: Access to personal dashboard, view daily/weekly menus, check attendance history, and view/download monthly mess bills.
